@@ -16,7 +16,7 @@ const AdminModel = new Schema<iAdminData>({
   email: { type: String },
   token: { type: String },
   status: { type: String },
-  verify: { type: Boolean },
+  verify: { type: Boolean, default: false },
 });
 
 export default model<iAdmin>("admins", AdminModel);
