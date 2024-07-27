@@ -55,6 +55,7 @@ mainApp(app);
 
 const server = app.listen(port, () => {
   console.log("server connected");
+  console.clear();
   dbConfig();
 });
 

@@ -2,10 +2,11 @@ import { Request, Response } from "express";
 import AdminModel from "../model/AdminModel";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
+import { sendEmail } from "../util/email";
 
 export const Register = async (req: any, res: Response) => {
   try {
-    const { firstName, verify, lastName, email } = req.body;
+    const { firstName, lastName, email, verify } = req.body;
     const id = crypto.randomBytes(4).toString("hex");
     const create = await AdminModel.create({
       firstName,
@@ -15,6 +16,8 @@ export const Register = async (req: any, res: Response) => {
       verify,
       token: id,
     });
+    sendEmail(create);
+
     return res.status(201).json({
       data: create,
       message: "data created",

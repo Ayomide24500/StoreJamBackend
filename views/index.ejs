@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jam Jam Collections</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f3f4f6;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .container {
+        background-color: #ffffff;
+        padding: 24px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 16px;
+      }
+      .verification-code {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+        margin-bottom: 16px;
+      }
+      .verify-button {
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .verify-button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Verification</h1>
+      <p class="verification-code"><%= data.token %></p>
+      <button
+        class="verify-button"
+        onclick="window.location.href='<%= data.url %>'"
+      >
+        Verify
+      </button>
+    </div>
+  </body>
+</html>
