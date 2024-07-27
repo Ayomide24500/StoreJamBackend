@@ -58,7 +58,7 @@
       <p class="verification-code"><%= data.token %></p>
       <button
         class="verify-button"
-        onclick="window.location.href='/verify?code=<%= data.token %>'"
+        onclick="window.location.href='<%= data.url %>'"
       >
         Verify
       </button>

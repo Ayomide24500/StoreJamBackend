@@ -48,8 +48,6 @@ export const sendEmail = async (admin: any) => {
       }
     );
 
-    let frontEndURL: string = `${URL}/${token}/sign-in`;
-
     const getFile = path.join(__dirname, "../views/index.ejs");
 
     const data = {
@@ -62,7 +60,7 @@ export const sendEmail = async (admin: any) => {
     const html = await ejs.renderFile(getFile, { data });
 
     const mailer = {
-      from: "jam collections 🚀👍 <ayomideadisa83@gmail.com>",
+      from: "jam collections 🚀👍 ",
       to: admin.email,
       subject: "Account Opening",
       html,
