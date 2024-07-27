@@ -48,8 +48,6 @@ export const sendEmail = async (admin: any) => {
       }
     );
 
-    let frontEndURL: string = `${URL}/${token}/sign-in`;
-
     const getFile = path.join(__dirname, "../views/index.ejs");
 
     const data = {
