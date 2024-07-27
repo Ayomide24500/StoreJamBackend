@@ -26,7 +26,7 @@ const app: Application = express();
 //   next();
 // });
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: process.env.APP_URL_DEPLOY }));
 
 // app.use(
 //   session({
