@@ -26,7 +26,11 @@ const app: Application = express();
 //   next();
 // });
 
-app.use(cors({ origin: process.env.APP_URL_DEPLOY }));
+app.use(
+  cors({
+    origin: process.env.APP_URL_DEPLOY,
+  })
+);
 
 // app.use(
 //   session({
