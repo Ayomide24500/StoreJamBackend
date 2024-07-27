@@ -48,6 +48,7 @@ app.use(body_parser_1.default.urlencoded({ extended: true }));
 (0, mainApp_1.mainApp)(app);
 const server = app.listen(port, () => {
     console.log("server connected");
+    console.clear();
     (0, dbConfig_1.dbConfig)();
 });
 process.on("uncaughtException", (err) => {

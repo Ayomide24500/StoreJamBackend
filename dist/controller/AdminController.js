@@ -16,9 +16,10 @@ exports.verifyAdmin = exports.Login = exports.Register = void 0;
 const AdminModel_1 = __importDefault(require("../model/AdminModel"));
 const crypto_1 = __importDefault(require("crypto"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const email_1 = require("../util/email");
 const Register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { firstName, verify, lastName, email } = req.body;
+        const { firstName, lastName, email, verify } = req.body;
         const id = crypto_1.default.randomBytes(4).toString("hex");
         const create = yield AdminModel_1.default.create({
             firstName,
@@ -28,6 +29,7 @@ const Register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             verify,
             token: id,
         });
+        (0, email_1.sendEmail)(create);
         return res.status(201).json({
             data: create,
             message: "data created",

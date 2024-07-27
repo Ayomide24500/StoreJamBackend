@@ -7,6 +7,6 @@ const AdminModel = new mongoose_1.Schema({
     email: { type: String },
     token: { type: String },
     status: { type: String },
-    verify: { type: Boolean },
+    verify: { type: Boolean, default: false },
 });
 exports.default = (0, mongoose_1.model)("admins", AdminModel);
