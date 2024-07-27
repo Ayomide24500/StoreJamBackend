@@ -60,7 +60,7 @@ export const sendEmail = async (admin: any) => {
     const html = await ejs.renderFile(getFile, { data });
 
     const mailer = {
-      from: "jam collections 🚀👍 ",
+      from: "jam collections 🚀👍hh ",
       to: admin.email,
       subject: "Account Opening",
       html,
