@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import AdminModel from "../model/AdminModel";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
-import { sendEmail } from "../util/email";
+// import { sendEmail } from "../util/email";
 
 export const Register = async (req: any, res: Response) => {
   try {
@@ -16,7 +16,7 @@ export const Register = async (req: any, res: Response) => {
       verify,
       token: id,
     });
-    sendEmail(create);
+    // sendEmail(create);
 
     return res.status(201).json({
       data: create,
