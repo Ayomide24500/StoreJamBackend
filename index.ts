@@ -23,6 +23,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     "Access-Control-Allow-Origin",
     "https://jam-collections.vercel.app"
   );
+  // res.header("Access-Control-Allow-Origin", "http://localhost:5173");
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type");
@@ -34,6 +35,12 @@ app.use(
     origin: "https://jam-collections.vercel.app",
   })
 );
+
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173",
+//   })
+// );
 
 app.use(
   session({
