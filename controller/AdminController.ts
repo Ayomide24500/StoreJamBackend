@@ -31,7 +31,7 @@ export const Register = async (req: any, res: Response) => {
 
 export const Login = async (req: any, res: Response): Promise<Response> => {
   try {
-    const { email, token, firstName } = req.body;
+    const { email, token } = req.body;
 
     const admin = await AdminModel.findOne({
       email,
