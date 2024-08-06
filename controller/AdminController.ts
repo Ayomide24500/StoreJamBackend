@@ -1,15 +1,17 @@
 import { Request, Response } from "express";
 import AdminModel from "../model/AdminModel";
 import crypto from "crypto";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 // import { sendEmail } from "../util/email";
 
 export const Register = async (req: any, res: Response) => {
   try {
-    const { firstName, lastName, email, verify } = req.body;
+    const { firstName, lastName, email, verify, password } = req.body;
     const id = crypto.randomBytes(4).toString("hex");
     const create = await AdminModel.create({
       firstName,
+      password,
       lastName,
       status: "Admin",
       email,
@@ -22,53 +24,46 @@ export const Register = async (req: any, res: Response) => {
       data: create,
       message: "data created",
     });
-  } catch (error) {
+  } catch (error: any) {
     return res.status(404).json({
       message: "error creating data",
+      error: error.message,
     });
   }
 };
 
 export const Login = async (req: any, res: Response): Promise<Response> => {
   try {
-    const { email, token } = req.body;
+    const { email, password } = req.body;
 
-    const admin = await AdminModel.findOne({
-      email,
-    });
+    const admin = await AdminModel.findOne({ email });
 
-    if (admin) {
-      if (admin.token === token) {
-        if (admin.verify) {
-          const token = jwt.sign({ status: admin.status }, "admin", {
-            expiresIn: "1d",
-          });
+    if (admin && (await bcrypt.compare(password, admin.password))) {
+      if (admin.verify) {
+        const token = jwt.sign({ status: admin.status }, "admin", {
+          expiresIn: "1d",
+        });
 
-          return res.status(201).json({
-            message: "welcome back",
-            data: token,
-            name: admin?.firstName,
-            user: admin?.status,
-            status: 201,
-          });
-        } else {
-          return res.status(404).json({
-            message: "please check your email to verify your account",
-          });
-        }
+        return res.status(201).json({
+          message: "welcome back",
+          data: token,
+          name: admin?.firstName,
+          user: admin?.status,
+          status: 201,
+        });
       } else {
         return res.status(404).json({
-          message: "Error reading your admin token ID",
+          message: "please check your email to verify your account",
         });
       }
     } else {
       return res.status(404).json({
-        message: "Error finding admin",
+        message: "Invalid email or password",
       });
     }
   } catch (error: any) {
-    return res.status(404).json({
-      message: "Error creating admin",
+    return res.status(500).json({
+      message: "Error logging in",
       data: error.message,
     });
   }
