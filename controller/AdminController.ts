@@ -7,11 +7,10 @@ import jwt from "jsonwebtoken";
 
 export const Register = async (req: any, res: Response) => {
   try {
-    const { firstName, lastName, email, verify, password } = req.body;
+    const { firstName, lastName, email, verify } = req.body;
     const id = crypto.randomBytes(4).toString("hex");
     const create = await AdminModel.create({
       firstName,
-      password,
       lastName,
       status: "Admin",
       email,
