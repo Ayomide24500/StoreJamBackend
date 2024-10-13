@@ -34,12 +34,12 @@ export const Register = async (req: any, res: Response) => {
 
 export const Login = async (req: any, res: Response): Promise<Response> => {
   try {
-    const { email, password } = req.body;
+    const { email, token } = req.body;
 
     const admin = await AdminModel.findOne({ email });
 
-    if (admin && (await bcrypt.compare(password, admin.password))) {
-      if (admin.verify) {
+    if (admin && (await bcrypt.compare(token, admin.token))) {
+      if (admin?.verify) {
         const token = jwt.sign({ status: admin.status }, "admin", {
           expiresIn: "1d",
         });
