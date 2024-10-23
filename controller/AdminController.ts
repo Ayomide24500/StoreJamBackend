@@ -8,14 +8,14 @@ import jwt from "jsonwebtoken";
 export const Register = async (req: any, res: Response) => {
   try {
     const { firstName, lastName, email, verify } = req.body;
-    const id = crypto.randomBytes(4).toString("hex");
+    const id = crypto.randomBytes(4).toString("hex"); // Generate a token
     const create = await AdminModel.create({
       firstName,
       lastName,
       status: "Admin",
       email,
       verify,
-      token: id,
+      token: id, // Store the token
     });
     // sendEmail(create);
 
@@ -37,27 +37,34 @@ export const Login = async (req: any, res: Response): Promise<Response> => {
 
     const admin = await AdminModel.findOne({ email });
 
-    if (admin && (await bcrypt.compare(token, admin.token))) {
+    if (admin) {
       if (admin.verify) {
-        const token = jwt.sign({ status: admin.status }, "admin", {
-          expiresIn: "1d",
-        });
+        if (admin.token === token) {
+          const authToken = jwt.sign(
+            { id: admin._id, status: admin.status },
+            "jeans",
+            { expiresIn: "1h" } // Token expiration
+          );
 
-        return res.status(201).json({
-          message: "welcome back",
-          data: token,
-          name: admin?.firstName,
-          user: admin?.status,
-          status: 201,
-        });
+          return res.status(200).json({
+            message: "welcome back",
+            data: authToken,
+            name: admin.firstName,
+            user: admin.status,
+          });
+        } else {
+          return res.status(401).json({
+            message: "Invalid token. Please check your token and try again.",
+          });
+        }
       } else {
-        return res.status(404).json({
-          message: "please check your email to verify your account",
+        return res.status(403).json({
+          message: "Please check your email to verify your account.",
         });
       }
     } else {
       return res.status(404).json({
-        message: "Invalid email or password",
+        message: "Admin not found. Please check your email and try again.",
       });
     }
   } catch (error: any) {
@@ -85,12 +92,12 @@ export const verifyAdmin = async (
       );
 
       return res.status(201).json({
-        message: "admin verified successfully",
+        message: "Admin verified successfully",
         data: verified,
       });
     } else {
       return res.status(404).json({
-        message: "error finding admin",
+        message: "Error finding admin",
         data: admin,
       });
     }

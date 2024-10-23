@@ -3,8 +3,8 @@ import { connect } from "mongoose";
 
 env.config();
 
-// const URL: string = "mongodb://localhost:27017/cart";
-const URL1: string | any = process.env.MONGODB_URL_ONLINE!;
+const URL1: string = "mongodb://localhost:27017/cart";
+// const URL1: string | any = process.env.MONGODB_URL_ONLINE!;
 
 export const dbConfig = async () => {
   try {
