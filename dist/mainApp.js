@@ -7,11 +7,13 @@ exports.mainApp = void 0;
 const AdminRouter_1 = __importDefault(require("./router/AdminRouter"));
 const UserRouter_1 = __importDefault(require("./router/UserRouter"));
 const ShoppingRouter_1 = __importDefault(require("./router/ShoppingRouter"));
+const OrderRouter_1 = __importDefault(require("./router/OrderRouter"));
 const mainApp = (app) => {
     try {
         app.use("/", AdminRouter_1.default);
         app.use("/", UserRouter_1.default);
         app.use("/", ShoppingRouter_1.default);
+        app.use("/", OrderRouter_1.default);
         app.get("/", (req, res) => {
             try {
                 return res.status(200).json({

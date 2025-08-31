@@ -37,7 +37,8 @@ const createCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         });
     }
     catch (error) {
-        return res.status(500).json({
+        console.log("error", error);
+        return res.status(404).json({
             message: "Error creating data",
             error: error.message,
         });

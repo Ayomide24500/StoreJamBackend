@@ -16,7 +16,7 @@ exports.dbConfig = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = require("mongoose");
 dotenv_1.default.config();
-// const URL: string = "mongodb://localhost:27017/cart";
+// const URL1: string = "mongodb://localhost:27017/cart";
 const URL1 = process.env.MONGODB_URL_ONLINE;
 const dbConfig = () => __awaiter(void 0, void 0, void 0, function* () {
     try {

@@ -19,35 +19,41 @@ const store = new MongoDBStore({
 });
 const port = 1200;
 const app = (0, express_1.default)();
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//   res.header("Access-Control-Allow-Origin", process.env.APP_URL_DEPLOY);
-//   res.header("Access-Control-Allow-Credentials", "true");
-//   res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
-//   res.header("Access-Control-Allow-Headers", "Content-Type");
-//   next();
-// });
-app.use((0, cors_1.default)({ origin: "http://localhost:5173" }));
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "https://jam-collections.vercel.app");
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    next();
+});
+app.use((0, cors_1.default)({
+    origin: "https://jam-collections.vercel.app",
+}));
 // app.use(
-//   session({
-//     secret: process.env.SESSION_SECRET!,
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//       maxAge: 1000 * 60 * 24 * 60,
-//       sameSite: "lax",
-//       secure: false,
-//       httpOnly: true,
-//       domain: process.env.APP_URL_DEPLOY,
-//     },
-//     store,
+//   cors({
+//     origin: "http://localhost:5173",
 //   })
 // );
+app.use((0, express_session_1.default)({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 24 * 60,
+        sameSite: "lax",
+        secure: false,
+        httpOnly: true,
+        domain: "https://jam-collections.vercel.app",
+    },
+    store,
+}));
 app.use(express_1.default.json());
 app.use(body_parser_1.default.json());
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 (0, mainApp_1.mainApp)(app);
 const server = app.listen(port, () => {
     console.log("server connected");
+    console.clear();
     (0, dbConfig_1.dbConfig)();
 });
 process.on("uncaughtException", (err) => {
