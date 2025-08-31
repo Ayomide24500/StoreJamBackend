@@ -19,10 +19,7 @@ const port: any = 1200;
 const app: Application = express();
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://jam-collections.vercel.app"
-  );
+  res.header("Access-Control-Allow-Origin", "jam-collections.vercel.app");
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type");
@@ -31,7 +28,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 app.use(
   cors({
-    origin: "https://jam-collections.vercel.app",
+    origin: "jam-collections.vercel.app",
   })
 );
 
@@ -52,7 +49,7 @@ app.use(
       sameSite: "lax",
       secure: false,
       httpOnly: true,
-      domain: "https://jam-collections.vercel.app",
+      domain: "jam-collections.vercel.app",
     },
 
     store,
