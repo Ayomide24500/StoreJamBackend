@@ -20,14 +20,14 @@ const store = new MongoDBStore({
 const port = 1200;
 const app = (0, express_1.default)();
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "jam-collections.vercel.app");
+    res.header("Access-Control-Allow-Origin", process.env.APP_URL_DEPLOY);
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
     res.header("Access-Control-Allow-Headers", "Content-Type");
     next();
 });
 app.use((0, cors_1.default)({
-    origin: "jam-collections.vercel.app",
+    origin: process.env.APP_URL_DEPLOY,
 }));
 // app.use(
 //   cors({
@@ -43,7 +43,7 @@ app.use((0, express_session_1.default)({
         sameSite: "lax",
         secure: false,
         httpOnly: true,
-        domain: "jam-collections.vercel.app",
+        domain: process.env.APP_URL_DEPLOY,
     },
     store,
 }));
